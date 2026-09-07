@@ -4,27 +4,28 @@
   home.homeDirectory = "/home/iyass";
   home.stateVersion = "26.05";
 
-  imports = [
-    ./hyprland.nix
+  imports =[
+    # ./modules/rofi
+    # ./modules/swww
+    # ./modules/waybar
+    # ./modules/ags
+    # ./modules/mako
+    # ./modules/hypr/hyprlock
+    # ./modules/hypr/hypridle
+    # ./modules/swappy
+    ./modules/git.nix
+    ./modules/core.nix
   ];
 
   programs.home-manager.enable = true;
-  home.packages = with pkgs; [
-    rofi
-    thunar
-    vscodium
-    kitty
-    hyprpaper
-    wl-clipboard
-    font-awesome
-    waybar
-  ];
 
-  programs.git = {
+  wayland.windowManager.hyprland = {
     enable = true;
-    settings.user.name = "TiyasDev";
-    settings.user.email = "iyastriyas2@gmail.com";
-#      userName = "TiyasDev";
-#      userEmail = "iyastriyas2@gmail.com";
+    xwayland.enable = true;
+    configType = "lua";
+    systemd.enable = false;
   };
+
+  xdg.configFile."hypr/hyprland.lua".source = 
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/home/modules/configuration/hypr/hyprland.lua";
 }

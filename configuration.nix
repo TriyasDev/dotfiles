@@ -6,7 +6,7 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
       ./hardware-configuration.nix
     ];
 
@@ -17,7 +17,7 @@
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  networking.hostName = "nixos00"; # Define your hostname.
+  networking.hostName = "nixos00";
 
   # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;

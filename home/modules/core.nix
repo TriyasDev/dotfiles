@@ -7,7 +7,7 @@
     kitty
     hyprpaper
     wl-clipboard
-    font-awesome
     waybar
+    playerctl
   ]; 
 }

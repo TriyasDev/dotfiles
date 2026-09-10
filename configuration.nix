@@ -68,7 +68,7 @@
   users.users.iyass = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "video" ];
-    hashedPasswordFile = "/etc/nixos/secret-user-password"
+    hashedPasswordFile = "/etc/nixos/secret-user-password";
     packages = with pkgs; [
       tree
     ];
@@ -78,6 +78,15 @@
     enable = true;
     xwayland.enable = true;
     withUWSM = true;
+  };
+
+  services.xserver.dpi = 96;
+
+  environment.sessionVariables = {
+    GDK_SCALE = "1";
+    GDK_DPI_SCALE = "1";
+    QT_SCALE_FACTOR = "1";
+    XFT_DPI = "96";
   };
 
   xdg.portal = {

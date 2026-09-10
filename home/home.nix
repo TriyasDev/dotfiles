@@ -26,6 +26,22 @@
     systemd.enable = false;
   };
 
+  gtk = {
+    enable = true;
+    font = {
+      name = "JetBrainsMono Nerd Font";
+      size = 10;
+    };
+    gtk3.extraConfig = {
+      gtk-xft-dpi = 96000;
+    };
+    gtk4.extraConfig = {
+      gtk-xft-dpi = 96000;
+    };
+  };
+
   xdg.configFile."hypr/hyprland.lua".source = 
     config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/home/modules/configuration/hypr/hyprland.lua";
+  xdg.configFile."kitty/kitty.conf".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/home/modules/configuration/kitty/kitty.conf";
 }

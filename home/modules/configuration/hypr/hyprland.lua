@@ -1,9 +1,9 @@
-hl.monitor = {
-    output = "",
-    mode = "preferred",
-    position = "auto",
-    scale = "auto",
-}
+hl.monitor({
+    output   = "eDP-1",
+    mode     = "1920x1080@60",
+    position = "0x0",
+    scale    = 1.2,
+})
 
 local mod = "SUPER"
 
@@ -18,6 +18,7 @@ hl.bind(mod .. " + E", hl.dsp.exec_cmd("thunar"))
 hl.bind(mod .. " + R", hl.dsp.exec_cmd("rofi -show drun"))
 
 hl.bind(mod .. " + M", hl.dsp.exit())
+hl.bind(mod .. " + F", hl.dsp.window.fullscreen())
 hl.bind(mod .. " + Q", hl.dsp.window.close())
 hl.bind(mod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mod .. " + P", hl.dsp.window.pseudo())
@@ -59,21 +60,24 @@ hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = tr
 hl.on("hyprland.start", function()
     hl.exec_cmd("waybar")
     hl.exec_cmd("hyprpaper")
+    hl.exec_cmd("hyprctl keyword monitor eDP-1,1920x1080@60,0x0,1    ")
 end)
 
-hl.env = {
-    "XCURSOR_SIZE,24",
-    "HYPRCURSOR_SIZE,24"
-}
+hl.env("GDK_SCALE", "1")
+hl.env("GDK_DPI_SCALE", "1")
+hl.env("QT_AUTO_SCREEN_SCALE_FACTOR", "1")
+hl.env("QT_SCALE_FACTOR", "1")
+hl.env("XCURSOR_SIZE", "24")
+hl.env("HYPRCURSOR_SIZE", "24")
 
 hl.config({
     general = {
-        gaps_in = 5,
-        gaps_out = 20,
+        gaps_in = 2,
+        gaps_out = 2,
         border_size = 2,
         col = {
-            active_border = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
-            inactive_border = "rgba(595959aa)",
+            active_border = { colors = {"rgb(8aadf4)", "rgb(24273A)", "rgb(24273A)", "rgb(8aadf4)"}, angle = 45 },
+            inactive_border = { colors = {"rgb(24273A)", "rgb(24273A)", "rgb(24273A)", "rgb(27273A)"}, angle = 45 }
         },
 
         resize_on_border = true,
@@ -97,9 +101,15 @@ hl.config({
         blur = {
             enabled = true,
             size = 3,
-            passes = 1,
+            passes = 3,
             vibrancy = 0.1696,
+            new_optimizations = true,
+            ignore_opacity = true,
         },
+    },
+
+    xwayland = {
+        force_zero_scaling = true
     },
 
     input = {
@@ -173,6 +183,7 @@ hl.curve("easy", { type = "spring", mass = 1, stiffness = 238, dampening = 24 })
 
 hl.animation({ leaf = "global", enabled = true, speed = 10, bezier = "default" })
 hl.animation({ leaf = "border", enabled = true, speed = 10, bezier = "easeOutQuint" })
+hl.animation({ leaf = "borderangle", enabled = true, speed = 30, bezier = "linear", style = "loop" })
 hl.animation({ leaf = "windows", enabled = true, speed = 4.79, spring = "easy" })
 hl.animation({ leaf = "windowsIn", enabled = true, speed = 4.1, spring = "easy", style = "popin 87%" })
 hl.animation({ leaf = "windowsOut", enabled = true, speed = 1.49, bezier = "linear", style = "popin 87%" })

@@ -1,0 +1,30 @@
+{
+  "layer": "top",
+  "position": "top",
+  "mod": "dock",
+  "exclusive": true,
+  "passthrough": false,
+  "gtk-layer-shell": true,
+
+  "include": [
+      // ~/.dotfiles/home/modules/configuration/waybar/*
+  ],
+
+  "modules-left": [
+      "clock",
+      "network",
+      "bluetooth",
+      "hyprland/window"
+  ],
+
+  "modules-center": [
+    "custom/rofi",
+    "hyprland/workspaces"
+  ],
+
+  "modules-right": [
+    "group/hardware",
+    "group/audio",
+    "tray"
+  ]
+}

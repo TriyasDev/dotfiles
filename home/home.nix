@@ -44,4 +44,6 @@
     config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/home/modules/configuration/hypr/hyprland.lua";
   xdg.configFile."kitty/kitty.conf".source =
     config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/home/modules/configuration/kitty/kitty.conf";
+  xdg.configFile."waybar/config.jsonc".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/home.modules/configuration/waybar/config.jsonc";
 }

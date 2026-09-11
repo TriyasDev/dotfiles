@@ -9,5 +9,7 @@
     wl-clipboard
     waybar
     playerctl
+    steam
+    godot
   ]; 
 }

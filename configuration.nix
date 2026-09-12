@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
 { config, lib, pkgs, ... }:
 
 {
@@ -10,43 +6,34 @@
       ./hardware-configuration.nix
     ];
 
-  # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "nixos00";
 
-  # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
   time.timeZone = "Asia/Jakarta";
 
-  # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
     font = "Lat2-Terminus16";
-    useXkbConfig = true; # use xkb.options in tty.
+    useXkbConfig = true;
   };
 
-  # Enable the X11 windowing system.
   services.xserver.enable = true;
-
-  # Configure keymap in X11
   services.xserver.xkb.layout = "us";
   services.xserver.xkb.options = "eurosign:e,caps:escape";
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
-  # Enable sound. 
+  # Enable sound.
 
   # services.pulseaudio.enable = true;
   # OR
@@ -58,16 +45,14 @@
   services.xserver.videoDrivers = ["amdgpu"];
   services.power-profiles-daemon.enable = true;
   services.blueman.enable = true;
-  
+
   nix.settings.experimental-features = [ "nix-command" "flakes"];
 
-  # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.iyass = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "video" ];
+    extraGroups = [ "wheel" "networkmanager" "video" "adbusers" "kvm"];
     hashedPasswordFile = "/etc/nixos/secret-user-password";
     packages = with pkgs; [
       tree
@@ -93,7 +78,7 @@
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
   };
- 
+
   services.greetd = {
     enable = true;
     settings = {
@@ -112,13 +97,21 @@
   ];
 
   programs.firefox.enable = true;
+  #programs.adb.enable = true;
 
-  # List packages installed in system profile.
-  # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
     git
     home-manager
+    android-tools
   ];
+
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.iyass = import ./home/home.nix
+  }
+
+  nixpkgs.config.allowUnfree = true;
 
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.amd.updateMicrocode = true;

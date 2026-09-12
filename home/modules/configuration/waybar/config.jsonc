@@ -6,9 +6,9 @@
   "passthrough": false,
   "gtk-layer-shell": true,
 
-  "include": [
-      // ~/.dotfiles/home/modules/configuration/waybar/*
-  ],
+  // "include": [
+  //     ~/.dotfiles/home/modules/configuration/waybar/*
+  // ],
 
   "modules-left": [
       "clock",
@@ -26,5 +26,23 @@
     "group/hardware",
     "group/audio",
     "tray"
-  ]
+  ],
+
+  "group/hardware": {
+    "orientation": "horizontal",
+    "modules": [
+      "temperature",
+      "battery",
+      "power-profiles-daemon",
+      "backlight"
+    ]
+  },
+
+  "group/audio": {
+    "orientation": "horizontal",
+    "modules": [
+      "pulseaudio",
+      "pulseaudio#microphone"
+    ]
+  }
 }

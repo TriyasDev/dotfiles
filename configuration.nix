@@ -52,7 +52,7 @@
 
   users.users.iyass = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "video" "adbusers" "kvm"];
+    extraGroups = [ "wheel" "networkmanager" "video" "adbusers" "kvm" ];
     hashedPasswordFile = "/etc/nixos/secret-user-password";
     packages = with pkgs; [
       tree
@@ -89,6 +89,7 @@
     };
   };
 
+  security.polkit.enable = true;
   security.pam.services.hyprlock = {};
 
   fonts.packages = with pkgs; [
@@ -102,14 +103,14 @@
   environment.systemPackages = with pkgs; [
     git
     home-manager
-    android-tools
+    mesa-demos
   ];
 
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.iyass = import ./home/home.nix
-  }
+    users.iyass = import ./home/home.nix;
+  };
 
   nixpkgs.config.allowUnfree = true;
 

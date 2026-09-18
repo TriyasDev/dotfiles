@@ -2,14 +2,21 @@
 {
   home.packages = with pkgs; [
     rofi
-    thunar
-    vscodium
     kitty
     hyprpaper
-    wl-clipboard
     waybar
+    wl-clipboard
+    pamixer
+    pavucontrol
     playerctl
+    polkit-kde-agent
+    mako
+    libnotify
+    nerd-fonts.jetbrains-mono
+
     godot
     android-studio
+    thunar
+    vscodium
   ]; 
 }

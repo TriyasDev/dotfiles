@@ -21,6 +21,8 @@
 
   programs.home-manager.enable = true;
 
+  fonts.fontconfig.enable = true;
+
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
@@ -47,5 +49,5 @@
   xdg.configFile."kitty/kitty.conf".source =
     config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/home/modules/configuration/kitty/kitty.conf";
   xdg.configFile."waybar/config.jsonc".source =
-    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/home.modules/configuration/waybar/config.jsonc";
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/home/modules/configuration/waybar/config.jsonc";
 }

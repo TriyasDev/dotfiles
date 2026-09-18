@@ -43,8 +43,20 @@
   };
 
   services.xserver.videoDrivers = ["amdgpu"];
-  services.power-profiles-daemon.enable = true;
+  services.power-profiles-daemon.enable = false;
   services.blueman.enable = true;
+
+  services.tlp = {
+    enable = true;
+    settings = {
+      CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+      CPU_BOOST_ON_BAT = 0;
+      CPU_BOOST_ON_AC = 1;
+    };
+  };
 
   nix.settings.experimental-features = [ "nix-command" "flakes"];
 
@@ -104,15 +116,22 @@
     git
     home-manager
     mesa-demos
+    powertop
   ];
 
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    users.iyass = import ./home/home.nix;
-  };
-
   nixpkgs.config.allowUnfree = true;
+
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
+  
+  hardware.graphics.extraPackages = with pkgs; [
+    rocmPackages.clr.icd
+  ];
+
+  programs.gamemode.enable = true;
 
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.amd.updateMicrocode = true;
@@ -121,6 +140,14 @@
     enable = true;
     enable32Bit = true;
   };
+
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+  };
+
+  nix.settings.auto-optimise-store = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

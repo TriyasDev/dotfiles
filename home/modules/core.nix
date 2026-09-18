@@ -1,6 +1,7 @@
 { pkgs, ...}:
 {
   home.packages = with pkgs; [
+    brightnessctl
     rofi
     kitty
     hyprpaper
@@ -9,11 +10,12 @@
     pamixer
     pavucontrol
     playerctl
-    polkit-kde-agent
+    kdePackages.polkit-kde-agent-1
     mako
     libnotify
     nerd-fonts.jetbrains-mono
 
+    steam
     godot
     android-studio
     thunar

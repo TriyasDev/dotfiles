@@ -24,6 +24,11 @@ hl.bind(mod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mod .. " + J", hl.dsp.layout("togglesplit"))
 
+hl.bind(mod .. " + SHIFT + right", hl.dsp.window.move({ direction = "right" }))
+hl.bind(mod .. " + SHIFT + left", hl.dsp.window.move({ direction = "left" }))
+hl.bind(mod .. " + SHIFT + up", hl.dsp.window.move({ direction = "up" }))
+hl.bind(mod .. " + SHIFT + down", hl.dsp.window.move({ direction = "down" }))
+
 hl.bind(mod .. " + left", hl.dsp.focus({ direction = "left" }))
 hl.bind(mod .. " + right", hl.dsp.focus({ direction = "right" }))
 hl.bind(mod .. " + up", hl.dsp.focus({ direction = "up" }))
@@ -42,15 +47,16 @@ for i = 1, 5 do
     local key  = i % 5
     hl.bind(mod .. " + " .. key, hl.dsp.focus({ workspace = i }))
     hl.bind(mod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
-
 end
 
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })
-hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true, repeating = true })
-hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),                  { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),                  { locked = true, repeating = true })
+hl.bind(mod .. " + SHIFT + V", hl.dsp.exec_cmd("pavucontrol"))
+
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("pamixer -i 5"), { locked = true, repeating = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("pamixer -d 5"), { locked = true, repeating = true })
+hl.bind("XF86AudioMute", hl.dsp.exec_cmd("pamixer -t"), { locked = true, repeating = true })
+hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("pamixer --default-source -t"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"), { locked = true, repeating = true })
 
 hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
@@ -60,7 +66,9 @@ hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = tr
 hl.on("hyprland.start", function()
     hl.exec_cmd("waybar")
     hl.exec_cmd("hyprpaper")
-    hl.exec_cmd("hyprctl keyword monitor eDP-1,1920x1080@60,0x0,1    ")
+    hl.exec_cmd("hyprctl keyword monitor eDP-1,1920x1080@60,0x0,1")
+    hl.exec_cmd("mako")
+    hl.exec_cmd("/run/current-system/sw/libexec/polkit-kde-authentication-agen-1")
 end)
 
 hl.env("GDK_SCALE", "1")
@@ -69,6 +77,7 @@ hl.env("QT_AUTO_SCREEN_SCALE_FACTOR", "1")
 hl.env("QT_SCALE_FACTOR", "1")
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
+hl.env("XCURSOR_THEME", "Bibata-Modern-Ice")
 
 hl.config({
     general = {
@@ -108,10 +117,6 @@ hl.config({
         },
     },
 
-    xwayland = {
-        force_zero_scaling = true
-    },
-
     input = {
         kb_layout = "us",
         follow_mouse = 1,
@@ -124,6 +129,14 @@ hl.config({
     misc = {
         force_default_wallpaper = -1,
         disable_hyprland_logo = false,
+    },
+
+    xwayland = {
+        force_zero_scaling = true
+    },
+
+    cursor = {
+        inactive_timeout = 5,
     },
 
     animations = {

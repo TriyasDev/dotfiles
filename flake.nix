@@ -6,25 +6,27 @@
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    stylix.url = "github:danth/stylix";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }: {
+  outputs = { self, nixpkgs, home-manager, stylix, ... }: {
   nixosConfigurations.nixos00 = nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     modules = [
       ./configuration.nix
+      stylix.nixosModules.stylix
       home-manager.nixosModules.home-manager
-      {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.users.iyass = import ./home/home.nix;
-      }
-    ];
-   };
+        {
+         home-manager.useGlobalPkgs = true;
+         home-manager.useUserPackages = true;
+          home-manager.users.iyass = import ./home/home.nix;
+        }
+      ];
+    };
 
-  homeConfigurations."iyass" = home-manager.lib.homeManagerConfiguration {
-    pkgs = nixpkgs.legacyPackages.x86_64-linux;
-    modules = [ ./home/home.nix ];
-  };
+    homeConfigurations."iyass" = home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+     modules = [ ./home/home.nix ];
+    };
   };
 }

@@ -45,6 +45,7 @@
   services.xserver.videoDrivers = ["amdgpu"];
   services.power-profiles-daemon.enable = false;
   services.blueman.enable = true;
+  services.fstrim.enable = true;
 
   services.tlp = {
     enable = true;
@@ -148,6 +149,7 @@
   };
 
   nix.settings.auto-optimise-store = true;
+  
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

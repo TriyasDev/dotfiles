@@ -36,7 +36,7 @@
       "power-profiles-daemon",
       "backlight"
     ]
-  },
+    },
 
   "group/audio": {
     "orientation": "horizontal",
